@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
 import styles from '../styles/login.style';
 
-const AddEditExpense = () => {
+const AddEditExpense = props => {
   const [title, setTitle] = useState('');
   const [cost, setCost] = useState('');
   return (
@@ -23,7 +23,15 @@ const AddEditExpense = () => {
           style={styles.textInput}
         />
       </View>
-      <Button style={styles.loginButton} title='Save' color='#841584' />
+      <Button
+        style={styles.loginButton}
+        title='Save'
+        onPress={() => {
+          props.saveExpense(title, cost);
+          props.addEditExpenseHandler();
+        }}
+        color='#841584'
+      />
     </View>
   );
 };

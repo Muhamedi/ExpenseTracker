@@ -5,12 +5,7 @@ import CardList from '../components/CardList';
 import AddEditExpense from '../components/AddEditExpense';
 
 const Expenses = () => {
-  const [isAddEdit, setAddEdit] = useState(false);
-  const addEditExpenseHandler = () => {
-    setAddEdit(isAddEdit => !isAddEdit);
-  };
-
-  const existingExpenses = [
+  const [expenses, setExpenses] = useState([
     { title: 'Internet', cost: '20$', category: 'Monthly', date: '28.11.2020' },
     { title: 'Rryma', cost: '10$', category: 'Monthly', date: '12.20.2020' },
     {
@@ -26,13 +21,31 @@ const Expenses = () => {
       date: '17.10.2021',
     },
     { title: 'Qiraja', cost: '230$', category: 'Monthly', date: '02.02.2021' },
-  ];
+  ]);
+  const [isAddEdit, setAddEdit] = useState(false);
+
+  const addEditExpenseHandler = () => {
+    setAddEdit(isAddEdit => !isAddEdit);
+  };
+
+  const saveExpense = (title, cost) => {
+    var totalExpenses = [
+      ...expenses,
+      { title, cost, category: 'Food & Drinks', date: '17.10.2021' },
+    ];
+    setExpenses(totalExpenses);
+  };
   return (
-    <View style={styles.main}>
-      {isAddEdit && <AddEditExpense />}
+    <View>
+      {isAddEdit && (
+        <AddEditExpense
+          saveExpense={saveExpense}
+          addEditExpenseHandler={addEditExpenseHandler}
+        />
+      )}
       {!isAddEdit && (
         <View>
-          <CardList expenses={existingExpenses} />
+          <CardList expenses={expenses} />
           <Button title='Add' onPress={addEditExpenseHandler} />
         </View>
       )}
